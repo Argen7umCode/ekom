@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - 27017:27017
+
+  # bot:
+  #   image: python3.11.6-alpine
+  #   environment:
+  #     BOT_TOKEN: 6121578455:AAE_ed98CH3qUi5Cg5Y27ku3M7Fky0nL4Gk
+  #     DB_USERNAME: root
+  #     DB_PASSWORD: pass
+  #     DB_NAME: 
+  #   depends_on:
+  #     - mongo

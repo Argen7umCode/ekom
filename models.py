@@ -48,8 +48,14 @@ class DynamicModel(BaseModel):
     @validator('fields', each_item=True)
     def validate_fields(cls, value, **kwargs):
         if StringValidator.validate(value):
-            for custom_type in datatypes:
-                if v:=custom_type.validate(value):
-                    return v
-            else:
-                raise ValueError
+            return cls.__check_datatypes(value)
+        else:
+            raise ValueError
+
+    @classmethod
+    def __check_datatypes(cls, value):
+        for custom_type in datatypes:
+            if v := custom_type.validate(value):
+                return v
+        else: return value
+
