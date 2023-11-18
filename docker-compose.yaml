@@ -9,14 +9,20 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: pass
     ports:
-      - 27017:27017
+      - 27020:27017
 
-  # bot:
-  #   image: python3.11.6-alpine
-  #   environment:
-  #     BOT_TOKEN: 6121578455:AAE_ed98CH3qUi5Cg5Y27ku3M7Fky0nL4Gk
-  #     DB_USERNAME: root
-  #     DB_PASSWORD: pass
-  #     DB_NAME: 
-  #   depends_on:
-  #     - mongo
+  web:
+    build: .
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_PATH=mongodb://mongo:27017
+      - DATABASE_NAME=ekom
+      - COLLECTION_NAME=forms
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=pass
+    depends_on:
+      - mongo

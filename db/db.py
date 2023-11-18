@@ -9,7 +9,7 @@ class Finder:
     async def find_one(self, query: dict):
         data = (await self.collection.find_one(query))
         return {key : value for key, value in 
-                data.items() if key != "_id"}
+                data.items() if key != "_id"} if data else None
 
     async def find_many(self, query: dict):
         cursor = await self.collection.find(query)
